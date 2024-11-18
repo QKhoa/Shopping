@@ -17,7 +17,7 @@
 <body>
 
 <section class="flex justify-center items-center flex-col w-full h-screen bg-gradient-to-br from-blue-200 via-gray-200 to-blue-400">
-    <div class="bg-white w-4/5 max-w-lg border border-gray-300 p-8 rounded-3xl shadow-2xl transition transform hover:scale-105">
+    <div class="bg-white w-4/5 max-w-lg border border-gray-300 p-8 rounded-3xl shadow-2xl transition transform ">
         <h2 class="text-3xl font-extrabold text-center text-gray-800 mb-10">Create Your Account</h2>
         <form id="registerForm" action="#">
             <!-- Email Field -->
@@ -95,13 +95,13 @@
 
 
 
-            <!-- Remember Me and Forgot Password -->
+<%--            <!-- Remember Me and Forgot Password -->--%>
             <div class="flex justify-between items-center mb-6">
-                <label class="flex items-center text-sm text-gray-700">
-                    <input type="checkbox" class="mr-2 rounded border-gray-300">
-                    Remember me
-                </label>
-                <a href="#" class="text-sm text-blue-500 hover:text-blue-700 underline">Forgot Password?</a>
+<%--                <label class="flex items-center text-sm text-gray-700">--%>
+<%--                    <input type="checkbox" class="mr-2 rounded border-gray-300">--%>
+<%--                    Remember me--%>
+<%--                </label>--%>
+                <a href="login.jsp" class="text-sm text-blue-500 hover:text-blue-700 underline">Already have account?</a>
             </div>
 
             <!-- Submit Button -->
@@ -110,7 +110,7 @@
                     type="submit"
                     class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all "
                     disabled
-                    style="background-color: green; opacity: 0.5;"
+                    style=" opacity: 0.5;"
             >
                 Sign Up
             </button>
@@ -120,9 +120,7 @@
     </div>
 
     <!-- Footer -->
-    <div class="mt-8">
-        <h1 class="text-gray-700 font-semibold text-md">Designed by <span class="text-blue-500 hover:underline">Thieu Quang Khoa</span></h1>
-    </div>
+
 </section>
 
 

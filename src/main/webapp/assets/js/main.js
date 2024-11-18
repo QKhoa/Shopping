@@ -32,31 +32,65 @@ function showConfirmPassword() {
 
 
 
-document.getElementById('registerForm').addEventListener('input', function () {
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
-    const submitButton = document.getElementById('submitButton');
-    const errMessage = document.getElementById('errMessage');
+const registerForm = document.getElementById('registerForm');
+if (registerForm) {
+    registerForm.addEventListener('input', function () {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const submitButton = document.getElementById('submitButton');
+        const errMessage = document.getElementById('errMessage');
 
-    // Reset error message and button state
-    errMessage.textContent = '';
-    errMessage.style.display = 'none';
-    submitButton.disabled = true;
-
-    // Validate input
-    if (password.length === 0 || confirmPassword.length === 0) {
+        // Reset error message and button state
+        errMessage.textContent = '';
+        errMessage.style.display = 'none';
         submitButton.style.opacity = '0.5';
-        // submitButton.style.cursor = 'alo';
-        errMessage.textContent = 'Password cannot be empty';
-        errMessage.style.display = 'block';
+        submitButton.style.cursor = 'not-allowed';
+        submitButton.disabled = true;
 
-    } else if (password !== confirmPassword) {
+        // Validate input
+        if (password.length === 0 || confirmPassword.length === 0) {
+            errMessage.textContent = 'Password cannot be empty';
+            errMessage.style.display = 'block';
+        } else if (password !== confirmPassword) {
+            errMessage.textContent = 'Passwords do not match';
+            errMessage.style.display = 'block';
+        } else {
+            submitButton.style.opacity = '1';
+            submitButton.style.cursor = 'pointer';
+            submitButton.disabled = false; // Enable button if validation passes
+        }
+    });
+}
+
+// Add event listener for the login form if it exists
+const loginForm = document.getElementById('loginForm');
+if (loginForm) {
+    loginForm.addEventListener('input', function () {
+        const password = document.getElementById('password').value;
+        const submitButton = document.getElementById('submitButton');
+        const errMessage = document.getElementById('errMessage');
+
+        // Reset button and error message state
         submitButton.style.opacity = '0.5';
-        errMessage.textContent = 'Passwords do not match';
-        errMessage.style.display = 'block';
-    } else {
-        submitButton.style.opacity = '1';
-        submitButton.style.cursor = 'pointer';
-        submitButton.disabled = false; // Enable button if validation passes
-    }
-});
+        submitButton.style.cursor = 'not-allowed';
+        submitButton.disabled = true;
+        errMessage.style.display = 'none';
+        errMessage.textContent = '';
+
+        // Validate password field
+        if (password.length === 0) {
+            errMessage.textContent = 'Password cannot be empty.';
+            errMessage.style.display = 'block';
+        } else if (password.length < 6) {
+            errMessage.textContent = 'Password must be at least 6 characters long.';
+            errMessage.style.display = 'block';
+        } else {
+            // Enable submit button if password is valid
+            submitButton.style.opacity = '1';
+            submitButton.style.cursor = 'pointer';
+            submitButton.disabled = false;
+        }
+    });
+}
+
+
