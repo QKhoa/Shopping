@@ -16,7 +16,7 @@
         class="flex justify-center items-center flex-col w-full h-screen bg-gradient-to-br from-blue-200 via-gray-200 to-blue-400">
     <div class="bg-white w-4/5 max-w-lg border border-gray-300 p-8 rounded-3xl shadow-2xl transition transform ">
         <h2 class="text-3xl font-extrabold text-center text-gray-800 mb-10">Login Your Account</h2>
-        <form id="loginForm" action="#" oninput="validateLoginForm()">
+        <form  method="post" id="loginForm" action="${pageContext.request.contextPath}/loginservlet" oninput="validateLoginForm()">
             <!-- Email Field -->
             <div class="form-group mb-5">
                 <label for="email" class="block text-gray-700 font-semibold mb-2">Email Address</label>

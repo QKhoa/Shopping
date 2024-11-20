@@ -1,7 +1,7 @@
 package model.customer;
 
 import connectsqlserver.DatabaseConnector;
-import controller.daointerface.DAOInterface;
+import model.daointerface.DAOInterface;
 import java.sql.*;
 import java.util.ArrayList;
 

@@ -50,16 +50,16 @@ function isEmailValid() {
 
 
 function isUserNameValid() {
-    const userNameField = document.getElementById('userName');
-    const userNameError = document.getElementById('userNameError');
+    const usernameField = document.getElementById('username');
+    const usernameError = document.getElementById('usernameError');
 
 
-    if (userNameField.value.trim() === '') {
-        userNameError.textContent = 'Username is empty';
-        userNameError.style.display = 'block';
+    if (usernameField.value.trim() === '') {
+        usernameError.textContent = 'Username is empty';
+        usernameError.style.display = 'block';
         return false;
     } else {
-        userNameError.style.display = 'none';
+        usernameError.style.display = 'none';
         return true;
     }
 }

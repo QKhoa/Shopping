@@ -19,7 +19,7 @@
 <section class="flex justify-center items-center flex-col w-full h-screen bg-gradient-to-br from-blue-200 via-gray-200 to-blue-400">
     <div class="bg-white w-4/5 max-w-lg border border-gray-300 p-8 rounded-3xl shadow-2xl transition transform ">
         <h2 class="text-3xl font-extrabold text-center text-gray-800 mb-10">Create Your Account</h2>
-        <form id="registerForm" action="#" oninput="validateRegisterForm()">
+        <form method="post" id="registerForm" action="${pageContext.request.contextPath}/registerservlet" oninput="validateRegisterForm()">
             <!-- Email Field -->
             <div class="form-group mb-5">
                 <label for="email" class="block text-gray-700 font-semibold mb-2">Email Address</label>
@@ -38,17 +38,17 @@
 
             <!-- Name Field -->
             <div class="form-group mb-5">
-                <label for="userName" class="block text-gray-700 font-semibold mb-2">Your Name</label>
+                <label for="username" class="block text-gray-700 font-semibold mb-2">Your Name</label>
                 <input
                         type="text"
-                        name="userName"
-                        id="userName"
+                        name="username"
+                        id="username"
                         class="form-control w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Enter your name"
                         required
                 />
 
-                <p id="userNameError" class="text-red-500 text-xs" style="display: none"></p>
+                <p id="usernameError" class="text-red-500 text-xs" style="display: none"></p>
             </div>
 
             <!-- Password Field -->

@@ -1,4 +1,4 @@
-package controller.user;
+package model.user;
 
 
 import lombok.*;
@@ -8,12 +8,12 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class User {
-    private int userID;
-    private String userName;
+    private int id;
     private String email;
+    private String name;
     private String password;
+    private boolean isVerified;
     private Role role;
 
 
