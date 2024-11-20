@@ -1,96 +1,149 @@
-function showPassword() {
+// ------------------------------
+// Utility Functions
+// ------------------------------
 
-    const passwordField = document.getElementById('password');
-    const buttonText = document.getElementById('togglePassword');
+// Function to toggle the visibility of the password field
+function togglePasswordVisibility(passwordFieldId, toggleButtonId) {
+    const passwordField = document.getElementById(passwordFieldId);
+    const toggleButton = document.getElementById(toggleButtonId);
     if (passwordField.type === 'password') {
         passwordField.type = 'text';
-        buttonText.textContent = 'Hide';
+        toggleButton.textContent = 'Hide';
     } else {
         passwordField.type = 'password';
-        buttonText.textContent = 'Show';
+        toggleButton.textContent = 'Show';
     }
-
-
 }
 
+// ------------------------------
+// Password Visibility Handlers
+// ------------------------------
+
+function showPassword() {
+    togglePasswordVisibility('password', 'togglePassword');
+}
 
 function showConfirmPassword() {
-    const confirmPasswordField = document.getElementById('confirmPassword');
-    const buttonText = document.getElementById('toggleConfirmPassword');
-    if (confirmPasswordField.type === 'password') {
+    togglePasswordVisibility('confirmPassword', 'toggleConfirmPassword');
+}
 
-        confirmPasswordField.type = 'text';
-        buttonText.textContent = 'Hide';
+// ------------------------------
+// Form Validation
+// ------------------------------
+
+// Validate Email
+function isEmailValid() {
+    const emailField = document.getElementById('email');
+    const email = emailField.value.trim();
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const emailError = document.getElementById('emailError');
+
+    if (!emailRegex.test(email)) {
+        emailError.textContent = 'Email is invalid.';
+        emailError.style.display = 'block';
+        return false;
     } else {
-        confirmPasswordField.type = 'password';
-        buttonText.textContent = 'Show';
+        emailError.style.display = 'none';
+        return true;
+    }
+}
+
+
+function isUserNameValid() {
+    const userNameField = document.getElementById('userName');
+    const userNameError = document.getElementById('userNameError');
+
+
+    if (userNameField.value.trim() === '') {
+        userNameError.textContent = 'Username is empty';
+        userNameError.style.display = 'block';
+        return false;
+    } else {
+        userNameError.style.display = 'none';
+        return true;
+    }
+}
+
+// Validate Password
+function isPasswordValid() {
+    const passwordField = document.getElementById('password');
+    const passwordError = document.getElementById('passwordError');
+    const password = passwordField.value.trim();
+
+    if (password === '') {
+        passwordError.textContent = 'Password cannot be empty.';
+        passwordError.style.display = 'block';
+        return false;
+    } else if (password.length < 6) {
+        passwordError.textContent = 'Password must be at least 6 characters.';
+        passwordError.style.display = 'block';
+        return false;
+    } else {
+        passwordError.style.display = 'none';
+        return true;
+    }
+}
+
+// Validate Confirm Password
+function isConfirmPasswordValid() {
+    const passwordField = document.getElementById('password');
+    const confirmPasswordField = document.getElementById('confirmPassword');
+    const confirmPasswordError = document.getElementById('confirmPasswordError');
+
+    if (passwordField.value !== confirmPasswordField.value) {
+        confirmPasswordError.textContent = 'Passwords do not match.';
+        confirmPasswordError.style.display = 'block';
+        return false;
+    } else {
+        confirmPasswordError.style.display = 'none';
+        return true;
+    }
+}
+
+// Validate Register Form
+function validateRegisterForm() {
+    const submitButton = document.getElementById('submitButton');
+    if (isEmailValid() && isUserNameValid() && isPasswordValid() && isConfirmPasswordValid()) {
+        submitButton.disabled = false;
+        submitButton.style.opacity = '1';
+    } else {
+        submitButton.disabled = true;
+        submitButton.style.opacity = '0.5';
+    }
+}
+
+
+function validateLoginForm() {
+    const submitButton = document.getElementById('submitButton');
+    if (isEmailValid() && isUserNameValid()) {
+        submitButton.disabled = false;
+        submitButton.style.opacity = '1';
+    } else {
+        submitButton.disabled = true;
+        submitButton.style.opacity = '0.5';
     }
 
 
 }
 
+// ------------------------------
+// Event Listeners
+// ------------------------------
 
-
-
-const registerForm = document.getElementById('registerForm');
-if (registerForm) {
-    registerForm.addEventListener('input', function () {
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-        const submitButton = document.getElementById('submitButton');
-        const errMessage = document.getElementById('errMessage');
-
-        // Reset error message and button state
-        errMessage.textContent = '';
-        errMessage.style.display = 'none';
-        submitButton.style.opacity = '0.5';
-        submitButton.style.cursor = 'not-allowed';
-        submitButton.disabled = true;
-
-        // Validate input
-        if (password.length === 0 || confirmPassword.length === 0) {
-            errMessage.textContent = 'Password cannot be empty';
-            errMessage.style.display = 'block';
-        } else if (password !== confirmPassword) {
-            errMessage.textContent = 'Passwords do not match';
-            errMessage.style.display = 'block';
-        } else {
-            submitButton.style.opacity = '1';
-            submitButton.style.cursor = 'pointer';
-            submitButton.disabled = false; // Enable button if validation passes
-        }
-    });
-}
-
-// Add event listener for the login form if it exists
-const loginForm = document.getElementById('loginForm');
-if (loginForm) {
-    loginForm.addEventListener('input', function () {
-        const password = document.getElementById('password').value;
-        const submitButton = document.getElementById('submitButton');
-        const errMessage = document.getElementById('errMessage');
-
-        // Reset button and error message state
-        submitButton.style.opacity = '0.5';
-        submitButton.style.cursor = 'not-allowed';
-        submitButton.disabled = true;
-        errMessage.style.display = 'none';
-        errMessage.textContent = '';
-
-        // Validate password field
-        if (password.length === 0) {
-            errMessage.textContent = 'Password cannot be empty.';
-            errMessage.style.display = 'block';
-        } else if (password.length < 6) {
-            errMessage.textContent = 'Password must be at least 6 characters long.';
-            errMessage.style.display = 'block';
-        } else {
-            // Enable submit button if password is valid
-            submitButton.style.opacity = '1';
-            submitButton.style.cursor = 'pointer';
-            submitButton.disabled = false;
-        }
-    });
-}
-
-
+// document.addEventListener('DOMContentLoaded', function () {
+//     const emailField = document.getElementById('email');
+//     const passwordField = document.getElementById('password');
+//     const confirmPasswordField = document.getElementById('confirmPassword');
+//
+//     // Add event listeners for form validation
+//     if (emailField) emailField.addEventListener('input', validateRegisterForm);
+//     if (passwordField) passwordField.addEventListener('input', validateRegisterForm);
+//     if (confirmPasswordField) confirmPasswordField.addEventListener('input', validateRegisterForm);
+//
+//     // Add event listeners for password visibility
+//     const togglePasswordBtn = document.getElementById('togglePassword');
+//     const toggleConfirmPasswordBtn = document.getElementById('toggleConfirmPassword');
+//
+//     if (togglePasswordBtn) togglePasswordBtn.addEventListener('click', showPassword);
+//     if (toggleConfirmPasswordBtn) toggleConfirmPasswordBtn.addEventListener('click', showConfirmPassword);
+// });
