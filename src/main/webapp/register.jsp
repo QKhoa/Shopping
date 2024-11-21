@@ -34,6 +34,7 @@
 
                 />
                 <p id="emailError" class="text-red-500 text-xs" style="display: none"></p>
+                <p id="emailDuplicate" class="text-red-500 text-xs" style="display: none">Email already exists</p>
             </div>
 
             <!-- Name Field -->
@@ -46,6 +47,7 @@
                         class="form-control w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Enter your name"
                         required
+                        oninput="isUserNameValid()"
                 />
 
                 <p id="usernameError" class="text-red-500 text-xs" style="display: none"></p>

@@ -32,21 +32,73 @@ function showConfirmPassword() {
 // ------------------------------
 
 // Validate Email
-function isEmailValid() {
+// function isEmailValid() {
+//     const emailField = document.getElementById('email');
+//     const email = emailField.value.trim();
+//     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+//     const emailError = document.getElementById('emailError');
+//
+//     if (!emailRegex.test(email)) {
+//         emailError.textContent = 'Email is invalid.';
+//         emailError.style.display = 'block';
+//         return false;
+//     } else {
+//         emailError.style.display = 'none';
+//         return true;
+//     }
+// }
+
+
+
+async function isEmailValid() {
     const emailField = document.getElementById('email');
     const email = emailField.value.trim();
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const emailError = document.getElementById('emailError');
 
+
+    // Bước 1: Kiểm tra định dạng email
     if (!emailRegex.test(email)) {
         emailError.textContent = 'Email is invalid.';
         emailError.style.display = 'block';
+
         return false;
     } else {
-        emailError.style.display = 'none';
-        return true;
+        emailError.style.display = 'none'; // Ẩn thông báo lỗi định dạng
+    }
+
+    // Bước 2: Kiểm tra email trùng lặp qua server
+    try {
+        const response = await fetch('http://localhost:8080/shopping/checkemailservlet', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `email=${encodeURIComponent(email)}`,
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        if (data.exists) {
+            emailError.textContent = 'Email already exists.';
+            emailError.style.display = 'block';
+            return false;
+        } else {
+            emailError.style.display = 'none';
+            return true;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+
     }
 }
+
+
+
+
 
 
 function isUserNameValid() {
@@ -88,6 +140,7 @@ function isPasswordValid() {
 function isConfirmPasswordValid() {
     const passwordField = document.getElementById('password');
     const confirmPasswordField = document.getElementById('confirmPassword');
+
     const confirmPasswordError = document.getElementById('confirmPasswordError');
 
     if (passwordField.value !== confirmPasswordField.value) {
@@ -102,7 +155,20 @@ function isConfirmPasswordValid() {
 
 // Validate Register Form
 function validateRegisterForm() {
+    const email = document.getElementById('email').value.trim();
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const confirmPassword = document.getElementById('confirmPassword').value.trim();
     const submitButton = document.getElementById('submitButton');
+
+    // kiem tra xem cac truong co bi trong khong
+    if (!email || !username || !password || !confirmPassword) {
+        submitButton.disabled = true;
+        submitButton.style.opacity = '0.5';
+        return;
+    }
+
+
     if (isEmailValid() && isUserNameValid() && isPasswordValid() && isConfirmPasswordValid()) {
         submitButton.disabled = false;
         submitButton.style.opacity = '1';
@@ -114,8 +180,18 @@ function validateRegisterForm() {
 
 
 function validateLoginForm() {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
     const submitButton = document.getElementById('submitButton');
-    if (isEmailValid() && isUserNameValid()) {
+
+    if (!email || !password) {
+        submitButton.disabled = true;
+        submitButton.style.opacity = '0.5';
+        return;
+    }
+
+
+    if (isEmailValid() && isPasswordValid()) {
         submitButton.disabled = false;
         submitButton.style.opacity = '1';
     } else {

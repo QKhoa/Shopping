@@ -5,18 +5,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.customer.Customer;
-import model.customer.CustomerDAO;
 import model.email.Email;
 import model.email.VerificationCodeGenerator;
 import model.user.Role;
 import model.user.User;
 import model.user.UserDAO;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
 
 import static controller.security.PasswordUtils.encode;
 

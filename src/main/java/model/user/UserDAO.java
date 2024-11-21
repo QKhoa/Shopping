@@ -5,6 +5,7 @@ import model.daointerface.DAOInterface;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import static controller.security.PasswordUtils.*;
@@ -64,6 +65,28 @@ public class UserDAO implements DAOInterface<User> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    public boolean isEmailExist(String email) {
+        String sql = "SELECT count(*) as count FROM Users WHERE email = ?";
+
+        try (Connection connection = DatabaseConnector.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+
+            ps.setString(1, email);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("count") > 0;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+
     }
 
 }
