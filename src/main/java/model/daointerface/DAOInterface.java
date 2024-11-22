@@ -9,7 +9,7 @@ public interface DAOInterface<T> {
     public T getById(String id);
 
 
-    public void create(T t);
+    public void insert(T t);
 
     public T update(T t);
 

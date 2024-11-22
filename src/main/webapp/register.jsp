@@ -34,7 +34,7 @@
 
                 />
                 <p id="emailError" class="text-red-500 text-xs" style="display: none"></p>
-                <p id="emailDuplicate" class="text-red-500 text-xs" style="display: none">Email already exists</p>
+
             </div>
 
             <!-- Name Field -->
@@ -138,8 +138,7 @@
 
 
 
-<script src="assets/js/main.js"></script>
-
+<script src="assets/js/test.js"></script>
 
 
 

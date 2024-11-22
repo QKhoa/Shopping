@@ -13,12 +13,16 @@ import lombok.Setter;
 
 import java.util.Properties;
 import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 @NoArgsConstructor
 public class Email {
+
     private static final String from = "quangkhoa5112@gmail.com";
     private static final String password = "hsmjlofiljhxcuzq";
+    private static final ExecutorService executor = Executors.newFixedThreadPool(10);
 
 
     public static void sendVerificationEmail(String to, String verificationCode) {
@@ -66,7 +70,18 @@ public class Email {
 
     }
 
-    public class VerificationCodeGenerator {
+    public static void sendEmailAsync(String email, String verificationCode) {
+        executor.submit(() -> {
+            try {
+                Email.sendVerificationEmail(email, verificationCode);
+                System.out.println("Email sent to " + email);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
+    public static void shutdown() {
+        executor.shutdown();
     }
 }

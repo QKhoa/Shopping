@@ -27,7 +27,7 @@ public class UserDAO implements DAOInterface<User> {
     }
 
     @Override
-    public void create(User user) {
+    public void insert(User user) {
 
     }
 

@@ -109,7 +109,7 @@ public class CustomerDAO implements DAOInterface<Customer> {
     }
 
     @Override
-    public void create(Customer customer) {
+    public void insert(Customer customer) {
         String sql = "INSERT INTO Customers (customerID, companyName, contactName, contactTitle, address, city, region, postalCode, country, phone, fax) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 

@@ -1,23 +1,24 @@
 package controller.user;
 
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.user.Role;
+import model.email.Email;
 import model.user.User;
 import model.user.UserDAO;
+import model.verificationcode.VerificationCode;
+import model.verificationcode.VerificationCodeDAO;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import static controller.security.PasswordUtils.encode;
 
-
-@WebServlet(urlPatterns = {"/registerservlet"})
-public class RegisterServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/confirmverificationservlet"})
+public class ConfirmVerificationServlet extends HttpServlet {
 
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -43,57 +44,35 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException {
         String url = request.getContextPath();
 
-        response.sendRedirect(url + "/register.jsp");
+
     }
 
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String url = request.getContextPath();
+        HttpSession session = request.getSession();
 
-        String email = request.getParameter("email");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        User user = (User) session.getAttribute("user");
+        // Lấy email từ request hoặc hardcode như ví dụ
+        String email = user.getEmail();
+
+        // Tạo mã xác minh
+        String verificationCode = VerificationCode.generateCode();
+
+        VerificationCode verificationCodeObj = new VerificationCode(email, verificationCode);
+
+        VerificationCodeDAO.getInstance().insert(verificationCodeObj);
 
 
-
-
-
-        try {
-            // Kiểm tra dữ liệu đầu vào
-
-            // Tạo đối tượng User
-            User user = new User();
-            user.setEmail(email);
-            user.setName(username);
-            user.setPassword(encode(password)); // Mã hóa mật khẩu
-            user.setVerified(false); // Người dùng mặc định chưa xác thực
-            user.setRole(Role.USER); // Gán vai trò
+        // Gửi email xác minh
+        Email.sendEmailAsync(email, verificationCode);
+        // luu ma vao bang verification_codes
 
 
 
+        request.getRequestDispatcher("verify.jsp").forward(request, response);
 
-
-
-
-            // Lưu người dùng vào cơ sở dữ liệu
-            UserDAO.getInstance().saveUser(user);
-            HttpSession session = request.getSession();
-
-            session.setAttribute("user", user);
-//
-//            session.setAttribute("user", user);
-
-            request.getRequestDispatcher("/welcome.jsp").forward(request, response);
-            // Điều hướng đến trang thành công
-//            response.sendRedirect(url + "/welcome.jsp");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("error", "Đã xảy ra lỗi trong quá trình đăng ký. Vui lòng thử lại.");
-//            request.getRequestDispatcher("/index.jsp").forward(request, response);
-        }
 
     }
 

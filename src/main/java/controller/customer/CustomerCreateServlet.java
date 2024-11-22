@@ -41,7 +41,7 @@ public class CustomerCreateServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        CustomerDAO.getInstance().create( customer );
+        CustomerDAO.getInstance().insert( customer );
 
 
         resp.sendRedirect(url+ "/customerviewservlet");

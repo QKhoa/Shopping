@@ -84,11 +84,16 @@ async function isEmailValid() {
     // Kiểm tra định dạng email
     if (!isEmailCorrect()) {
         return false;
+    } else {
+
+        const isDuplicate = await isEmailDuplicate(email);
+        return !isDuplicate; // Nếu không trùng lặp, trả về true
     }
 
+    return true;
+
     // Kiểm tra email trùng lặp
-    const isDuplicate = await isEmailDuplicate(email);
-    return !isDuplicate; // Nếu không trùng lặp, trả về true
+
 }
 
 
@@ -177,7 +182,6 @@ async function validateRegisterForm() {
         submitButton.style.opacity = '0.5';
     }
 }
-
 
 
 function validateLoginForm() {

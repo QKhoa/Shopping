@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<!DOCTYPE html>
 <head>
     <title>Login page</title>
     <link rel="stylesheet" href="assets/css/output.css">
@@ -24,13 +24,15 @@
                         type="email"
                         name="email"
                         id="email"
+                        oninput="isEmailCorrect()"
                         class="form-control w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Enter your email"
                         required
-                        oninput="isEmailValid()"
+
 
                 />
                 <p id="emailError" class="text-red-500 text-xs" style="display: none"></p>
+
             </div>
 
 
@@ -70,8 +72,13 @@
                 <a href="#" class="text-sm text-blue-500 hover:text-blue-700 underline">Forgot Password?</a>
             </div>
 
+            <%-- Invalid email or password            --%>
+
+            <div id="loginError" class="text-red-500 text-center text-xl my-5 ">${requestScope.loginError}</div>
+
             <!-- Submit Button -->
             <button
+
                     id="submitButton"
                     type="submit"
                     class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all "
@@ -89,6 +96,25 @@
 
 </section>
 
-<script src="assets/js/main.js"></script>
+<script src="assets/js/test.js"></script>
+
+<%--<script>--%>
+<%--    function isEmailCorrect() {--%>
+<%--        const emailField = document.getElementById('email');--%>
+<%--        const email = emailField.value.trim();--%>
+<%--        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;--%>
+<%--        const emailError = document.getElementById('emailError');--%>
+
+<%--        if (!emailRegex.test(email)) {--%>
+<%--            emailError.textContent = 'Email is invalid.';--%>
+<%--            emailError.style.display = 'block';--%>
+<%--            return false;--%>
+<%--        } else {--%>
+<%--            emailError.style.display = 'none'; // Ẩn thông báo lỗi định dạng--%>
+<%--            return true;--%>
+<%--        }--%>
+<%--    }--%>
+<%--</script>--%>
+
 </body>
 </html>
