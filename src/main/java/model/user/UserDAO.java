@@ -18,7 +18,37 @@ public class UserDAO implements DAOInterface<User> {
 
     @Override
     public ArrayList<User> getAll() {
-        return null;
+        String sql = "select id, email, name, password, is_verified, created_at, role from Users";
+        ArrayList<User> users = new ArrayList<>();
+
+        try {
+
+        Connection conn = DatabaseConnector.getConnection();
+        PreparedStatement ps  = conn.prepareStatement(sql);
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            User user = new User();
+            user.setId(rs.getInt("id"));
+            user.setEmail(rs.getString("email"));
+            user.setName(rs.getString("name"));
+            user.setPassword(rs.getString("password"));
+            user.setIsVerified(rs.getBoolean("is_verified"));
+            user.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+
+            user.setRole(Role.valueOf(rs.getString("role")));
+
+            users.add(user);
+
+        }
+
+        return users;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     @Override
@@ -52,7 +82,7 @@ public class UserDAO implements DAOInterface<User> {
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getName());
             ps.setString(3, user.getPassword()); // Mật khẩu đã được mã hóa
-            ps.setBoolean(4, user.isVerified());
+            ps.setBoolean(4, user.getIsVerified());
             ps.setString(5, user.getRole().toString()); // Lưu vai trò dưới dạng chuỗi
 
             // Thực thi câu lệnh

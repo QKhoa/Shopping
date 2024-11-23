@@ -6,20 +6,19 @@ import model.user.UserDAO;
 import model.verificationcode.VerificationCode;
 import model.verificationcode.VerificationCodeDAO;
 
+import java.util.ArrayList;
+
 public class test {
     public static void main(String[] args) {
 
-        String error = null;
+        ArrayList<User> users = UserDAO.getInstance().getAll();
 
-        VerificationCode verificationCode = VerificationCodeDAO.getInstance().getCodeByEmail("quangkhoa5112@gmail.com");
-
-        if (verificationCode == null) {
-             error = "No verification code found for the provided email.";
-
+        for (User user : users) {
+            System.out.println(user.toString());
         }
 
 
-        System.out.println(error);
+
 
 
     }

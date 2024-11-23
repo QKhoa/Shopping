@@ -63,7 +63,7 @@ public class LoginServlet extends HttpServlet {
             if (user != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
-                if (user.isVerified()) {
+                if (user.getIsVerified()) {
 
                     // Tài khoản đã được xác minh -> Đăng nhập thành công
 

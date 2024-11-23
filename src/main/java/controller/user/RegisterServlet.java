@@ -68,7 +68,7 @@ public class RegisterServlet extends HttpServlet {
             user.setEmail(email);
             user.setName(username);
             user.setPassword(encode(password)); // Mã hóa mật khẩu
-            user.setVerified(false); // Người dùng mặc định chưa xác thực
+            user.setIsVerified(false); // Người dùng mặc định chưa xác thực
             user.setRole(Role.USER); // Gán vai trò
 
 

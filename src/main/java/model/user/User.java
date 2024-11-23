@@ -3,6 +3,8 @@ package model.user;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @ToString
@@ -13,8 +15,10 @@ public class User {
     private String email;
     private String name;
     private String password;
-    private boolean isVerified;
+    private Boolean isVerified;
+    private LocalDateTime createdAt;
     private Role role;
+
 
 
 
