@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class CustomerDAO implements DAOInterface<Customer> {
 
+
     public static CustomerDAO getInstance() {
         return new CustomerDAO();
 

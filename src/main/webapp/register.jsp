@@ -112,7 +112,7 @@
 <%--                    <input type="checkbox" class="mr-2 rounded border-gray-300">--%>
 <%--                    Remember me--%>
 <%--                </label>--%>
-                <a href="login.jsp" class="text-sm text-blue-500 hover:text-blue-700 underline">Already have account?</a>
+                <a href="auth.jsp" class="text-sm text-blue-500 hover:text-blue-700 underline">Already have account?</a>
             </div>
 
             <!-- Submit Button -->

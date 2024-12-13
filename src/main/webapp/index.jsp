@@ -9,9 +9,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/output.css">
     <title>Title</title>
 </head>
 <body>
+<%@ include file="components/header.jsp" %>
 
+
+
+<%@ include file="components/footer.jsp" %>
+
+<%@ include file="components/copyright.jsp" %>
 </body>
 </html>

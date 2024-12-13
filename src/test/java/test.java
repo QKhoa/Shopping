@@ -10,13 +10,23 @@ import java.util.ArrayList;
 
 public class test {
     public static void main(String[] args) {
+        Role role = Role.valueOf("ADMIN".toUpperCase());
 
-        ArrayList<User> users = UserDAO.getInstance().getAll();
+        Boolean isVerified = Boolean.parseBoolean("true");
+        User user = new User();
+        user.setId(17);
+        user.setEmail("quangkhoa5112@gmail.com");
+        user.setName("Quang");
 
-        for (User user : users) {
-            System.out.println(user.toString());
-        }
+        user.setIsVerified(isVerified);
+        user.setRole(role);
 
+
+
+
+//        request.setAttribute("user", user);
+
+        UserDAO.getInstance().updateUser(user);
 
 
 

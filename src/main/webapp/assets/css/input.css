@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.flex-center {
+  @apply flex items-center justify-center;
+}
+
+.inline-flex-center {
+  @apply inline-flex items-center justify-center;
+}
+
+.icon-6 {
+  @apply h-6 w-6;
+}
+
+.icon-4 {
+  @apply h-4 w-4;
+}
+
+.icon-5 {
+  @apply h-5 w-5;
+}
+
+.icon-3 {
+  @apply h-3 w-3;
+}
+
+.text-custom-sm {
+  @apply font-main text-sm font-normal text-white;
+}
+
+.text-custom-md {
+  @apply font-main text-base font-normal text-white;
+}

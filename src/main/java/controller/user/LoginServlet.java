@@ -15,6 +15,7 @@ import model.user.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
+import java.util.Optional;
 
 
 @WebServlet(urlPatterns = {"/loginservlet"})
@@ -44,7 +45,7 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String url = request.getContextPath();
-        response.sendRedirect(url+"/login.jsp");
+        response.sendRedirect(url+"/auth.jsp");
     }
 
 
@@ -57,35 +58,30 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         try {
-            // Kiểm tra tài khoản có tồn tại hay không
-            User user = UserDAO.getInstance().isAccountExist(email, password);
+            // Check if the account exists
+            Optional<User> optionalUser = UserDAO.getInstance().isAccountExist(email, password);
+            User user = optionalUser.orElseThrow(() -> new RuntimeException("User not found"));
 
-            if (user != null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                if (user.getIsVerified()) {
+            HttpSession session = request.getSession();
+            session.setAttribute("user", user);
 
-                    // Tài khoản đã được xác minh -> Đăng nhập thành công
-
-
-                    response.sendRedirect(url + "/index.jsp"); // Trang chào mừng
-                } else {
-                    // Tài khoản chưa được xác minh -> Chuyển hướng đến trang xác minh
-                   // gui ma xac minh qua email
-
-
-                    request.setAttribute("user", user);
-
-                    request.getRequestDispatcher("/welcome.jsp").forward(request, response); // Trang xác minh
-                }
+            if (user.getIsVerified()) {
+                // Account verified -> Successful login
+                response.sendRedirect(url + "/index.jsp"); // Welcome page
             } else {
-                // Tài khoản không tồn tại hoặc thông tin sai
-                String loginError = "Invalid email or password.";
-                request.setAttribute("loginError", loginError);
-                request.getRequestDispatcher("/login.jsp").forward(request, response); // Trang đăng nhập
+                // Account not verified -> Redirect to verification page
+                // Optionally send a verification code via email
+                request.setAttribute("user", user);
+                request.getRequestDispatcher("/welcome.jsp").forward(request, response); // Verification page
             }
+        } catch (RuntimeException e) {
+            // Handle user not found or other exceptions
+            String loginError = "Invalid email or password.";
+            request.setAttribute("loginError", loginError);
+            request.getRequestDispatcher("/auth.jsp").forward(request, response); // Login page
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            // Handle unexpected errors
+            throw new RuntimeException("An unexpected error occurred", e);
         }
     }
 
